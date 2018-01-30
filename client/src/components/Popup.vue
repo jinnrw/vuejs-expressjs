@@ -3,20 +3,25 @@
     <h1 class="page-title">Popup demo</h1>
 
     <!-- <router-view/> -->
-    <div class="users">
-      <h4>Users</h4>
+    <div class="users-container">
+      <h2>Users</h2>
       <ul>
-        <li v-for="(user, index) in users" class="users" v-bind:key="user.index" v-on:click="popupToggle(index)">{{ user.Firstname }}</li>
+        <li v-for="(user, index) in users" class="users" v-bind:key="user.index" v-on:click="popupToggle(index)" v-if="!user.multipleProjects">{{ user.Firstname }}</li>
+      </ul>
+      <h2>Users have multiple projects</h2>
+      <ul>
+        <!-- <li v-for="user in hasMultipleProjects" class="users" v-bind:key="user.index" v-on:click="popupToggle(index)">{{ user.Firstname }}</li> -->
+        <li v-for="(user, index) in users" class="users" v-bind:key="user.index" v-on:click="popupToggle(index)" v-if="user.multipleProjects">{{ user.Firstname }}</li>        
       </ul>
     </div>
-    <div>
-      <input type="text" v-model="newUser.Firstname">
-      <button @click="addUser">Add</button>
+    <div class="add-user">
+      <input type="text" v-model="newUser.Firstname" class="add-user_input">
+      <button @click="addUser" :disabled="!newUser.Firstname">Add</button>
     </div>
 
     <retailer-list class="retailer-list"></retailer-list>
 
-    <div class="user-popup" v-bind:class="{ isActive: popupIsActive }">
+    <div class="user-popup" v-bind:class="{ 'is-active': popupIsActive }">
       <h2 class="user-popup_title">User Info</h2>
       <div v-for="(value, key, index) in currentUser" v-bind:key="index">
         <div class="avatar-container" v-if=" key === 'avatarId' ">
@@ -29,7 +34,7 @@
       </div>
     </div>
 
-    <div class="user-popup-bg" v-bind:class="{ isActive: popupIsActive }" v-on:click="popupToggle()"></div>
+    <div class="user-popup-bg" v-bind:class="{ 'is-active': popupIsActive }" v-on:click="popupToggle()"></div>
   </div>
 </template>
 
@@ -45,6 +50,14 @@ export default {
     },
     addUser() {
       this.users.push(this.newUser);
+      this.newUser = {
+        Firstname: ""
+      };
+    }
+  },
+  computed: {
+    hasMultipleProjects() {
+      return this.users.filter(user => user.multipleProjects);
     }
   },
   data() {
@@ -54,31 +67,36 @@ export default {
           avatarId: 0,
           Firstname: "Jinn",
           Lastname: "Wang",
-          ID: 0
+          ID: 0,
+          multipleProjects: false
         },
         {
           avatarId: 1,
           Firstname: "Mich",
           Lastname: "Gonzalez",
-          ID: 1
+          ID: 1,
+          multipleProjects: true
         },
         {
           avatarId: 2,
           Firstname: "Declan",
           Lastname: "Sharkey",
-          ID: 2
+          ID: 2,
+          multipleProjects: false
         },
         {
           avatarId: 3,
           Firstname: "Kevin",
           Lastname: "Leung",
-          ID: 3
+          ID: 3,
+          multipleProjects: true
         },
         {
           avatarId: 4,
           Firstname: "Carlos",
           Lastname: "Lavara",
-          ID: 4
+          ID: 4,
+          multipleProjects: false
         }
       ],
       currentUser: {},
@@ -96,15 +114,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
 .users {
   padding: 10px 0;
+  cursor: pointer;
 }
 
 .user-popup {
   display: none;
   padding: 10px 20px;
 
-  &.isActive {
+  &.is-active {
     display: block;
     position: fixed;
     top: 200px;
@@ -117,8 +137,17 @@ export default {
   }
 }
 
+.add-user {
+  display: flex;
+  justify-content: flex-end;
+
+  &_input {
+    margin-right: 10px;
+  }
+}
+
 .user-popup-bg {
-  &.isActive {
+  &.is-active {
     position: fixed;
     top: 0;
     left: 0;

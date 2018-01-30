@@ -1,5 +1,6 @@
 <template>
   <div> 
+    <h2>Retailer List</h2>
     <retailer class="retailer" v-for="(retailer, index) in retailers" v-bind:key="index">
       <h4 class="retailer-name">{{ retailer.name }}</h4>
       <div class="retailer_project" v-for="(project, index) in retailer.projects" v-bind:key="index">
@@ -11,8 +12,7 @@
 </template>
 
 <script>
-
-import Retailer from './Retailer.vue'
+import Retailer from "./Retailer.vue";
 
 export default {
   name: "RetailerList",
@@ -59,14 +59,13 @@ export default {
     };
   },
   components: {
-    'retailer': Retailer
+    retailer: Retailer
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .project-name {
   min-width: 100px;
 }
