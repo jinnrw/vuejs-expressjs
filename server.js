@@ -12,7 +12,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-app.use(express.static(__dirname + '/client'))
+app.use(express.static(__dirname + '/client/dist'))
   .get('/', (req, res) => res.render('index'))
 
 // Login request
@@ -28,7 +28,7 @@ app.post('/login', (req, res) => {
   }
 
   res.send({
-    error: 'Your email cannot be found'
+    error: 'Your email cannot be found on the server'
   })
 })
 
@@ -51,7 +51,7 @@ app.post('/login', (req, res) => {
 // Database
 app.userInfo = [{
   username: 'Jinn',
-  email: 'jrwang@gmail.com',
+  email: 'jrwang@pnimedia.com',
   number: '01'
 },
 {
