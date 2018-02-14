@@ -28,7 +28,7 @@ app.post('/login', (req, res) => {
   }
 
   res.send({
-    error: 'Your email cannot be found on the server'
+    error: 'Your email cannot be found'
   })
 })
 
