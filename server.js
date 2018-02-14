@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path')
 const cors = require('cors')
 // const morgan = require('morgan')
 // const {sequelize} = require('./models')
@@ -11,6 +12,10 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use(express.static(__dirname + '/client'))
+  .get('/', (req, res) => res.render('index'))
+
+// Login request
 app.post('/login', (req, res) => {
   for (var i = 0; i < app.userInfo.length; i++) {
     if (req.body.email === app.userInfo[i].email) {
@@ -61,7 +66,10 @@ app.userInfo = [{
 }
 ]
 
-app.listen(process.env.PORT || 8081)
+app.listen(process.env.PORT || 8081, function () {
+  console.log('server is running')
+})
+
 // require('./passport')
 
 // require('./routes')(app)

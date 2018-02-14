@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js --exec  \"npm run lint && node\"",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "eslint src/**/*.js  --fix",
+    "start": "nodemon server.js --exec  \"npm run lint && node\"",
+    "lint": "eslint /*.js",
+    "lint:fix": "eslint /*.js  --fix",
     "seed": "node seed"
   },
   "keywords": [],
