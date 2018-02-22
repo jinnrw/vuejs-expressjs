@@ -9,3 +9,5 @@ Contents:
 Packgages used:
   - webpack, axios, vue-loader
   - nodemon, eslint
+
+View [demo](https://oaxaca-ton.herokuapp.com/) here.
